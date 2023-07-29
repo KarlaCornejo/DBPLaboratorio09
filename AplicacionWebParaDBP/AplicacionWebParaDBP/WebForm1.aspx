@@ -16,6 +16,37 @@
 </head>
 <body>
     <form id="miFormulario" runat="server">
+                <script>
+            function limpiarCampos() {
+                document.getElementById("nombre").value = "";
+                document.getElementById("apellidos").value = "";
+                document.querySelector('input[name="sexo"]:checked').checked = false;
+                document.getElementById("correo").value = "";
+                document.getElementById("direccion").value = "";
+                document.getElementById("ciudadDropdown").value = "";
+                document.getElementById("descripcion").value = "";
+            }
+
+            // Función para mostrar la alerta según el valor de la variable "esCorrecto"
+
+            function mostrarAlerta(esCorrecto) {
+                var alerta = document.getElementById("serverSuccessMessage");
+
+                if (esCorrecto) {
+                    alerta.innerHTML = "Registro exitoso.";
+                    alerta.className = "alert alert-success";
+                    alert("Registro Correcto");
+                } else {
+                    alerta.innerHTML = "Error al guardar la información.";
+                    alerta.className = "alert alert-danger";
+                    alert("Error");
+                }
+
+                alerta.style.display = "block";
+            }
+
+
+                </script>
         <!-- Contenido del formulario -->
 
         <asp:ScriptManager runat="server"></asp:ScriptManager>
@@ -78,9 +109,9 @@
                 <asp:Button ID="ButtonEnviar" runat="server" Text="Enviar" OnClick="ButtonEnviar_Click" CssClass="btn btn-success btn-lg" />
                 <button type="button" class="btn btn-default button_primary_propio" onclick="limpiarCampos()">Limpiar</button>
             </div>
+            <div id="serverSuccessMessage" class="alert alert-info" role="alert"> Envia tu formulario primero! </div>
         </div>
 
-    <span id="serverSuccessMessage" runat="server" visible="false" class="text-success"></span>
      <div class="container">
     <div id="resultContainer" runat="server" visible="false">
         <h3>Valores recibidos:</h3>
@@ -93,29 +124,7 @@
         <p><strong>Descripción:</strong> <span id="lblDescripcion" runat="server"></span></p>
     </div>
     </div>
-        <div id="myModal" class="modal fade" role="dialog">
-        
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="icon-box">
-                            <i class="material-icons">
-                                <span class="material-symbols-outlined">
-                                    done
-                                </span>
-                            </i>
-                        </div>
-                        <button type="button" class="close btn btn-danger" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Mensaje se inserta dinámicamente aquí -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
         <footer class="border-top footer text-muted">
             <div class="container">

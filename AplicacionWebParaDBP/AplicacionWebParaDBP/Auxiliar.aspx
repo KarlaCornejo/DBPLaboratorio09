@@ -16,8 +16,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
- <form id="miFormulario" runat="server">
-        <asp:ScriptManager runat="server"></asp:ScriptManager>
+    <form id="miFormulario" runat="server">
+        <asp:ScriptManager runat="server" EnablePageMethods="true"></asp:ScriptManager>
         <header>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
                 <div class="container-fluid">
@@ -45,86 +45,79 @@
             <h3>Mostrar desde Sesiones</h3>
             <!-- Espacios para mostrar la información de sesión -->
             <div>
-                <strong>Nombre:</strong> <asp:Label ID="lblNombre" runat="server" CssClass="text-info"></asp:Label>
+                <strong>Nombre:</strong>
+                <asp:Label ID="lblNombre" runat="server" CssClass="text-info"></asp:Label>
             </div>
             <div>
-                <strong>Apellidos:</strong> <asp:Label ID="lblApellidos" runat="server" CssClass="text-info"></asp:Label>
+                <strong>Apellidos:</strong>
+                <asp:Label ID="lblApellidos" runat="server" CssClass="text-info"></asp:Label>
             </div>
             <div>
-                <strong>Sexo:</strong> <asp:Label ID="lblSexo" runat="server" CssClass="text-info"></asp:Label>
+                <strong>Sexo:</strong>
+                <asp:Label ID="lblSexo" runat="server" CssClass="text-info"></asp:Label>
             </div>
             <div>
-                <strong>Direccion:</strong> <asp:Label ID="lblDireccion" runat="server" CssClass="text-info"></asp:Label>
+                <strong>Direccion:</strong>
+                <asp:Label ID="lblDireccion" runat="server" CssClass="text-info"></asp:Label>
             </div>
             <div>
-                <strong>Ciudad:</strong> <asp:Label ID="lblCiudad" runat="server" CssClass="text-info"></asp:Label>
+                <strong>Ciudad:</strong>
+                <asp:Label ID="lblCiudad" runat="server" CssClass="text-info"></asp:Label>
             </div>
 
         </div>
-     <div class="container">
-    <h2>Registro de Alumno</h2>
-    <h3>Mostrar desde la Cookies</h3>
-    <!-- Agregar el botón para mostrar las cookies -->
-    <div>
-        <asp:Button ID="btnMostrarCookies" runat="server" Text="Mostrar Cookies" OnClick="btnMostrarCookies_Click" CssClass="btn btn-primary" />
-    </div>
-    <!-- Espacios para mostrar la información de sesión -->
-    <div>
-        <strong>Nombre:</strong> <asp:Label ID="Label1" runat="server" CssClass="text-info"></asp:Label>
-    </div>
-    <div>
-        <strong>Apellidos:</strong> <asp:Label ID="Label2" runat="server" CssClass="text-info"></asp:Label>
-    </div>
-    <div>
-        <strong>Sexo:</strong> <asp:Label ID="Label3" runat="server" CssClass="text-info"></asp:Label>
-    </div>
-    <div>
-        <strong>Direccion:</strong> <asp:Label ID="Label4" runat="server" CssClass="text-info"></asp:Label>
-    </div>
-    <div>
-        <strong>Ciudad:</strong> <asp:Label ID="Label5" runat="server" CssClass="text-info"></asp:Label>
-    </div>
-
-</div>
         <div class="container">
-<div class="row mt-3">
-<div class="cols-sm-2">
-<asp:Button ID="ButtonAjax" runat="server" Text="Ajax"
-OnClientClick="return callAjax();" class="btn btn-success btn-lg" />
-</div>
-</div>
-<div class="row">
-<div class="form-group row mt-3">
-<div class="col-sm-9">
-<div class="form-floating row mt-3">
-<asp:TextBox ID="TextBoxAjax" runat="server" class="form-control"
-Style="visibility: hidden"></asp:TextBox>
-</div>
-</div>
-</div>
-</div>
+            <h2>Registro de Alumno</h2>
+            <h3>Mostrar desde la Cookies</h3>
+            <!-- Agregar el botón para mostrar las cookies -->
+            <div>
+                <asp:Button ID="btnMostrarCookies" runat="server" Text="Mostrar Cookies" OnClick="btnMostrarCookies_Click" CssClass="btn btn-primary" />
+            </div>
+            <!-- Espacios para mostrar la información de sesión -->
+            <div>
+                <strong>Nombre:</strong>
+                <asp:Label ID="Label1" runat="server" CssClass="text-info"></asp:Label>
+            </div>
+            <div>
+                <strong>Apellidos:</strong>
+                <asp:Label ID="Label2" runat="server" CssClass="text-info"></asp:Label>
+            </div>
+            <div>
+                <strong>Sexo:</strong>
+                <asp:Label ID="Label3" runat="server" CssClass="text-info"></asp:Label>
+            </div>
+            <div>
+                <strong>Direccion:</strong>
+                <asp:Label ID="Label4" runat="server" CssClass="text-info"></asp:Label>
+            </div>
+            <div>
+                <strong>Ciudad:</strong>
+                <asp:Label ID="Label5" runat="server" CssClass="text-info"></asp:Label>
+            </div>
+
         </div>
-         <script type="text/javascript">
-             function callAjax() {
-                 let send = $(’#TextBoxCookie’).val();
-                 $.ajax({
-                     url: ’Auxiliar.aspx/getInformacion’,
-                     type: ’POST’,
-                     async: true,
-                     data: ’{ valor: "’ + send + ’" }’,
-                     dataType: "json",
-                     contentType: "application/json; charset=utf-8",
-                     success: exito
-});
-             return false;
-}
-             function exito(data) {
-                 var returnS = data.d;
-                 $(’#TextBoxAjax’).val(data.d);
-                 $(’#TextBoxAjax’).css("visibility", "visible");
-                 return false;
-             }
-         </script>
+        <div class="container">
+            <div class="row mt-3">
+                <div class="cols-sm-2">
+                    <asp:Button ID="btnObtenerInformacion" runat="server" Text="Obtener Información" OnClientClick="obtenerInformacion(); return false;" />
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group row mt-3">
+                    <div class="col-sm-9">
+                        <div class="form-floating row mt-3">
+                            <asp:TextBox ID="TextBoxAjax" runat="server" class="form-control" Style="visibility: hidden"></asp:TextBox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+
+
+
 
         <footer class="border-top footer text-muted">
             <div class="container">
@@ -132,5 +125,19 @@ Style="visibility: hidden"></asp:TextBox>
             </div>
         </footer>
     </form>
+    <!-- Agregar la función JavaScript para realizar la llamada AJAX -->
+    <script type="text/javascript">
+        function obtenerInformacion() {
+            var valor = "Hola desde el cliente AJAX"; // Puedes cambiar este valor según tus necesidades
+
+            // Llamada AJAX utilizando PageMethods
+            PageMethods.getInformacion(valor, OnObtenerInformacionComplete);
+        }
+
+        function OnObtenerInformacionComplete(resultado) {
+            // Maneja el resultado recibido del servidor
+            alert(resultado);
+        }
+    </script>
 </body>
 </html>

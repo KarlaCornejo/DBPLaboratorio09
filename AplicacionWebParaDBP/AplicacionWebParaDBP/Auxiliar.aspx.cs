@@ -65,10 +65,10 @@ namespace AplicacionWebParaDBP
                 Label5.Text = Request.Cookies["Ciudad"].Value;
         }
 
-        [WebMethod]
-        public static String getInformacion(String valor)
+        [System.Web.Services.WebMethod]
+        public static string getInformacion(string valor)
         {
-            return "Desde el servidor se recibio :" + valor;
+            return "Desde el servidor se recibio: " + valor;
         }
         private void deleteSessions()
         {

@@ -10,7 +10,8 @@ namespace ProyectoDatos
         {
             DBConeccion conn = new DBConeccion();
             conn.query();
-            conn.InsertarRegistro();
+            DatoAlumnos program = new DatoAlumnos();
+            program.InsertarRegistro("Karla", "López", "cornejo","Femenino",2,"HolaMundo");
         }
 
         private void query()
@@ -26,28 +27,6 @@ namespace ProyectoDatos
             for (int i = 0; i < list.Count; i++)
             {
                 Console.WriteLine(list[i]);
-            }
-        }
-        private void InsertarRegistro()
-        {
-            DataAlumnos dataAlumnos = new DataAlumnos();
-
-            // Ejemplo de cómo insertar un registro
-            string nombre = "Juan";
-            string apellidos = "Pérez";
-            string email = "juan@example.com";
-            string sexo = "M";
-            int codeCiudad = 1; // Supongamos que ya conoces el codeCiudad
-            string requerimiento = "Información adicional";
-
-            try
-            {
-                dataAlumnos.InsertarRegistro(nombre, apellidos, email, sexo, codeCiudad, requerimiento);
-                Console.WriteLine("Registro insertado exitosamente.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error al insertar el registro: " + ex.Message);
             }
         }
     }

@@ -37,7 +37,8 @@ namespace AplicacionWebParaDBP
             }
             string correo = this.correo.Text;
             string direccion = this.direccion.Text;
-            string ciudad = this.ciudadDropdown.SelectedValue;
+            int ciudad = this.ciudadDropdown.SelectedIndex;
+            string ciudad2 = this.ciudadDropdown.SelectedValue;
             string descripcion = this.descripcion.Text;
 
             // Mostrar los valores recibidos en el contenedor
@@ -46,19 +47,33 @@ namespace AplicacionWebParaDBP
             this.lblSexo.InnerText = sexo;
             this.lblCorreo.InnerText = correo;
             this.lblDireccion.InnerText = direccion;
-            this.lblCiudad.InnerText = ciudad;
+            this.lblCiudad.InnerText = ciudad2;
             this.lblDescripcion.InnerText = descripcion;
 
             // Mostrar el contenedor con los valores recibidos
             this.resultContainer.Visible = true;
-            
+
             // Llamar a la función para guardar la información
-            //GuardarInformacion(nombre, apellidos, sexo, correo, direccion, ciudad, descripcion);
-            createSesion(nombre, apellidos, sexo, direccion, ciudad);
-            createSesionCookies(nombre, apellidos, sexo, direccion, ciudad);
-            // Limpiar los campos del formulario
-            LimpiarCampos();
-            Response.Redirect("Auxiliar.aspx");
+            if (GuardarInformacion(nombre, apellidos, sexo, correo, direccion, ciudad, descripcion))
+            {
+                // Si el registro es exitoso, muestra la alerta de "correcto"
+                string script = "mostrarAlerta(true);";
+                ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", script, true);
+                createSesion(nombre, apellidos, sexo, direccion, ciudad2);
+                createSesionCookies(nombre, apellidos, sexo, direccion, ciudad2);
+
+                // Limpiar los campos del formulario
+                LimpiarCampos();
+                Response.Redirect("Auxiliar.aspx");
+            }
+            else
+            {
+                // Si ocurre un error al guardar, muestra la alerta de "error"
+                string script = "mostrarAlerta(false);";
+                ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", script, true);
+            }
+
+
         }
 
         private void LimpiarCampos()
@@ -113,7 +128,7 @@ namespace AplicacionWebParaDBP
             Session.RemoveAll();
             Session.Abandon();
         }
-        private void GuardarInformacion(string nombre, string apellidos, string sexo, string correo, string direccion, string ciudad, string descripcion)
+        private bool GuardarInformacion(string nombre, string apellidos, string sexo, string correo, string direccion, int ciudad, string descripcion)
         {
             // Crear el cliente del servicio
             Service1Client client = new Service1Client();
@@ -121,7 +136,15 @@ namespace AplicacionWebParaDBP
             try
             {
                 // Llamar al método del servicio para guardar la información
-                //client.GuardarInformacion(nombre, apellidos, sexo, correo, direccion, ciudad, descripcion);
+                if (client.GuardarInformacionVerificandoSQL(nombre, apellidos, sexo, correo, direccion, ciudad, descripcion))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
             }
             finally
             {
@@ -136,7 +159,6 @@ namespace AplicacionWebParaDBP
                 }
             }
         }
-
         private String[] serviceCall()
         {
             Service1Client client = new Service1Client();

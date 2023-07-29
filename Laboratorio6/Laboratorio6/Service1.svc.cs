@@ -3,7 +3,7 @@ using ProyectoDatos.Dao;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
+using System.ServiceModel;
 using System.Web;
 
 namespace Laboratorio6
@@ -42,24 +42,43 @@ namespace Laboratorio6
             }
         }
 
-
-        public bool GuardarInformacionSQL(String nombre, String apellidos, String sexo, String correo, String direccion, String ciudad, String descripcion)
+        public bool GuardarInformacionSimpleSQL(string nombre, string apellidos, string sexo, string email, string direccion, int codeCiudad, string descripcion)
         {
-            DataAlumnos dataAlumnos = new DataAlumnos();
-            // Verificar si el registro ya existe antes de insertar
-            if (dataAlumnos.RegistroExiste(nombre, apellidos))
-            {
-                return false;
-            }
-
-            // Llamar a la función para insertar el registro
+            DatoAlumnos data = new DatoAlumnos();
             try
             {
-                dataAlumnos.InsertarRegistro(nombre, apellidos, correo, sexo, 2, descripcion);
+                data.InsertarRegistro(nombre, apellidos, email, sexo, codeCiudad, descripcion);
                 return true;
             }
             catch (Exception ex)
             {
+                // Registrar la excepción para trazabilidad o análisis.
+                // ...
+
+                // Lanzar una excepción personalizada utilizando el contrato de servicio.
+                return false;
+            }
+        }
+
+        public bool GuardarInformacionVerificandoSQL(string nombre, string apellidos, string sexo, string email, string direccion, int codeCiudad, string descripcion)
+        {
+            DatoAlumnos data = new DatoAlumnos();
+            if (data.RegistroExiste(nombre,apellidos))
+            {
+                return false;
+            }
+
+            try
+            {
+                data.InsertarRegistro(nombre, apellidos, email, sexo, codeCiudad, descripcion);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Registrar la excepción para trazabilidad o análisis.
+                // ...
+
+                // Lanzar una excepción personalizada utilizando el contrato de servicio.
                 return false;
             }
         }
